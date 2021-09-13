@@ -1,90 +1,94 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
-
-
-<title th:remove="all">Order Confirmation</title>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<title th:remove="all">Order Confirmation</title>
 </head>
+<body
+	style="font-family: 'Roboto', sans-serif; font-size: 13px;">
+	<div id="wrapper" style="background-color: #f0f6fb;">
+		<div class="one-col">
 
-<body>
 
-	<div>
+			<br> <br> <br>
+			<table
+				style="border-collapse: collapse; margin: auto; table-layout: fixed; width: 100%;">
+				<tr style="border: 2px solid rgb(178, 178, 179); padding: 13px;">
+					<th><img style="max-width: 100%;"
+						src="https://ci4.googleusercontent.com/proxy/kQGGXoxb1-J38VKm4pYYeXlDdThuDAZcoLWafwNMU6z2ozfhWURT7M-X9-tfR5GsnTOiHNWEiaeu4723W_bRFuUOhDBG_HglTSfFTh9zHviPaRL-JLSs_Md8PhWBQb06KGrVadOINjjH07vh9dBSKXY2=s0-d-e1-ft#https://static.kabum.com.br/conteudo/temas/001/imagens/mensageiro/2016/mensageiro_kabum_top.jpg"
+						alt=""></th>
+				</tr>
 
-		<h1>
+				<tr style="border: 2px solid rgb(178, 178, 179); padding: 13px;">
+					<td style="border: 2px solid rgb(178, 178, 179); padding: 13px;">Informações
+						sobre o pedido: <b th:text="${pedido.id}"
+						style="color: rgba(114, 60, 112, 1);"></b>
+					</td>
+				</tr>
+				<tr style="border: 2px solid rgb(178, 178, 179); padding: 13px;">
+					<td style="border: 2px solid rgb(178, 178, 179); padding: 13px;"><br>
+						Olá <b th:text="${pedido.cliente.nome}"></b> , <br> <br>
+						Este e-mail possui informações sobre o seu pedido. <br> <br>
+						Horário do pedido: <span> <b
+							th:text="${#dates.format(pedido.instante, 'dd/MM/yyyy hh:mm')}"></b></span><br>
+						<br> Situação do pagamento: <span><b
+							th:text="${pedido.pagamento.estado.descricao}"></b></span> <br> <br>
+						<br></td>
+				</tr>
+				<tr style="border: 2px solid rgb(178, 178, 179); padding: 13px;">
+					<td style="border: 2px solid rgb(178, 178, 179); padding: 13px;">Informações
+						do pedido: <b th:text="${pedido.id}"
+						style="color: rgba(114, 60, 112, 1);"></b> <br> <br> <br>
+						<table
+							style="border-collapse: collapse; margin: auto; table-layout: fixed; width: 100%;">
+							<tr
+								style="text-align: center; text-transform: uppercase; background: linear-gradient(90deg, rgba(114, 60, 112, 1) 40%, rgba(46, 111, 149, 1) 100%); color: #f0f6fb;">
+								<td
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px;">Produto</td>
+								<td
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px;">Qtd</td>
+								<td
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px;">Preço</td>
+								<td
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px;">SubTotal</td>
+							</tr>
+							<tr th:each="item : ${pedido.itens}"
+								style="border: 1px solid rgb(178, 178, 179); padding: 2px;">
+								<td th:text="${item.produto.nome}"
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px;"></td>
+								<td th:text="${item.quantidade}"
+									style="border: 1px solid rgb(178, 178, 179); padding: 2px; text-align: center;"></td>
+								<td
+									th:text="${#numbers.formatDecimal(item.preco, 0, 'POINT', 2,'COMMA')}"
+									style="border: 1px solid rgb(178, 178, 179); text-align: center; padding: 2px;"></td>
+								<td
+									th:text="${#numbers.formatDecimal(item.subtotal, 0, 'POINT', 2,'COMMA')}"
+									style="border: 1px solid rgb(178, 178, 179); text-align: center; padding: 2px;"></td>
+							</tr>
+						</table> <br> <br> Valor Total: <b
+						th:text="${#numbers.formatDecimal(pedido.valorTotal, 0,'POINT', 2, 'COMMA')}"
+						style="color: rgba(114, 60, 112, 1);"></b>
 
-			Pedido número: <span th:text="${pedido.id}"></span>
-
-		</h1>
-
-		<p>
-
-			Instante: <span
-				th:text="${#dates.format(pedido.instante, 'dd/MM/yyyy hh:mm')}"></span>
-
-		</p>
-
-		<p>
-
-			Cliente: <span th:text="${pedido.cliente.nome}"></span>
-
-		</p>
-
-		<p>
-
-			Situação do Pagamento: <span
-				th:text="${pedido.pagamento.estado.descricao}"></span>
-
-		</p>
-
-		<h3>Detalhes do pedido:</h3>
-
-		<table border="1">
-
-			<tr>
-
-				<th>Produto</th>
-
-				<th>Quantidade</th>
-
-				<th>Preço Unitário</th>
-
-				<th>Subtotal</th>
-
-			</tr>
-
-			<tr th:each="item : ${pedido.itens}">
-
-				<th th:text="${item.produto.nome}"></th>
-
-				<th th:text="${item.quantidade}"></th>
-
-				<th
-					th:text="${#numbers.formatDecimal(item.preco, 0, 'POINT', 2,'COMMA')}"></th>
-
-				<th
-					th:text="${#numbers.formatDecimal(item.subtotal, 0, 'POINT', 2,'COMMA')}"></th>
-
-			</tr>
-
-		</table>
-
-		<p>
-
-			Valor Total: <span
-				th:text="${#numbers.formatDecimal(pedido.valorTotal, 0,'POINT', 2, 'COMMA')}"></span>
-
-		</p>
-
+					</td>
+				</tr>
+				<tr style="border: 2px solid rgb(178, 178, 179); padding: 13px;">
+					<td style="border: 2px solid rgb(178, 178, 179); padding: 13px;"><br>
+						<b style="color: rgba(114, 60, 112, 1);">Endereço de entrega</b><br>
+						<br> Lograudoro: Centro de vargem 590 Casa <br> Bairro:
+						Centro <br> Cidade/UF: Vargem Grande do Sul / SP <br>
+						CEP: 13880000 <br> Referencia: Nenhuma Referência <br> <br></td>
+				</tr>
+			</table>
+			<br> <br> <br>
+			<hr
+				style="height: 1px; background-color: rgb(178, 178, 179); clear: both; width: 96%; margin: auto;" />
+			<footer>
+				<p id="contact"
+					style="text-align: center; padding-bottom: 3%; line-height: 16px; font-size: 12px; color: #303840;">
+					App delivery <br /> Endereço tal <br /> appdelivery@gmail.com
+				</p>
+			</footer>
+		</div>
 	</div>
-
-
-
 </body>
-
 </html>
