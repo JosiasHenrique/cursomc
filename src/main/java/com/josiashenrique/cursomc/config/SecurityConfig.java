@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	//Lista de endpoints que será permitido sem autenticação.
 		private static final String[] PUBLIC_MATCHERS_GET = {
-				"/h2-console/**",
 				"/produtos/**",
-				"/categorias**"
+				"/categorias/**",
+				"/clientes/**"
 		};
 	
 	//Método para falar quais os endpoints que nao precisa de autenticação e exigir auth do resto.
